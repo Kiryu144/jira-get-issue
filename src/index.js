@@ -4,7 +4,7 @@ import {
 import { mkdirSync, appendFileSync } from 'fs';
 import { reverse } from 'esrever';
 
-const searchRegex = /\d+-[A-Z]+(?!-?[a-zA-Z]{1,10})/g;
+const searchRegex = /((?<!([a-zA-Z]{1,10})-?)[a-zA-Z]+-\d+)/g;
 const cliConfigDir = `${process.env.HOME}/.jira.d/`;
 const configDir = `${process.env.HOME}/jira/`;
 
@@ -24,7 +24,7 @@ try {
     throw new Error('No Jira issue was identified.');
   }
 
-  const issueKey = reverse(matches[0]);
+  const issueKey = matches[0].toUpperCase();
   info(`Found: ${issueKey}`);
   setOutput('issue-key', `${issueKey}`);
 
